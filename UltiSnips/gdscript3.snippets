@@ -1,0 +1,31 @@
+snippet va "typed variable"
+var ${1:name}${2/\w+/: /}${2:type} ${2/\w*/(?0::\:)/}= ${3:value}
+endsnippet
+
+snippet co "typed constant"
+const ${1:name}${2/\w+/: /}${2:type} ${2/\w*/(?0::\:)/}= ${3:value}
+endsnippet
+
+snippet en "enum"
+enum ${1:OPTIONAL_NAME} {
+	${2:NAME}${3/\w+/ = /}${3:value}
+}
+endsnippet
+
+snippet ma "match"
+match ${1:expression}:
+	${2:pattern}:
+		${3:pass}
+	_:
+		${4:pass}
+endsnippet
+
+snippet fu "function"
+func ${1:function_name}($2)
+	${VISUAL:pass}$0
+endsnippet
+
+snippet if "if"
+func ${1:expression}:
+	${VISUAL:pass}$0
+endsnippet
