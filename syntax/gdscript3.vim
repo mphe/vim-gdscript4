@@ -10,12 +10,13 @@ set cpo&vim
 
 syn keyword gdConditional if elif else match
 syn keyword gdRepeat      for while
-syn keyword gdOperator    and or not is in
-syn match   gdOperator    "\V&&\|||\|!\|&\|^\||\|~\|*\|/\|%\|+\|-\|=\|<\|>"
+syn keyword gdOperator    and or not is in as
+syn match   gdOperator    "\V&&\|||\|!\|&\|^\||\|~\|*\|/\|%\|+\|-\|=\|<\|>\|:"
 syn match   gdDelimiter   "\V(\|)\|[\|]\|{\|}"
-syn keyword gdStatement   break continue pass return
-syn keyword gdKeyword     extends tool signal self
-                        \ const enum var onready export setget
+syn keyword gdStatement   break continue pass return yield breakpoint
+syn keyword gdKeyword     extends tool signal self class_name void const enum
+                        \ var onready export setget preload assert rpc sync
+                        \ remote master puppet remotesync mastersync puppetsync
 syn match   gdKeyword     "\v^\s*((static\s*)=func|class)"
                         \ nextgroup=gdFunction skipwhite
 syn keyword gdBoolean     true false
