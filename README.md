@@ -33,12 +33,20 @@ Any plugin that supports omnicompletion should also work, but will likely requir
 
 For a non-comprehensive list of features, see this [wiki page](https://github.com/calviken/vim-gdscript3/wiki/Completion)
 
-# Syntastic
+# Linting
 
-For [Syntastic](https://github.com/vim-syntastic/syntastic) users, a checker is included and enabled by default. 
+Both [ALE](https://github.com/w0rp/ale) and [Syntastic](https://github.com/vim-syntastic/syntastic) are supported and linting is enabled by default. 
 
-First, download the [Godot server binary](https://godotengine.org/download), rename to `godot_server`, and place in a `$PATH` accessible directory.
+#### ALE
 
-Credit goes to [clktmr](https://github.com/clktmr) for creating the checker.
+Set the path to your Godot Headless or Godot Server executable in your vimrc:
+```vim
+let g:ale_gdscript3_godotheadless_executable = '/usr/local/bin/Godot_v3.1.1-stable_linux_headless.64'
+```
+
+#### Syntastic
+
+An `godot_server` executable needs to be available in `$PATH`. This can also be the Godot Headless executable or a symlink.
+
 # License
 MIT
