@@ -189,57 +189,71 @@ def build_completion(item, c_name=None):
         if t is classes.GodotMember:
             d["word"] = item.name
             if c_name:
-                d["abbr"] = "{}.{}".format(c_name, item.name)
-            d["kind"] = item.type
+                d["info"] = "{}.{}: {}".format(c_name, item.name, item.type)
+            d["menu"] = item.type
+            d["kind"] = 'm'
         elif t is classes.GodotConstant:
             d["word"] = item.name
-            if c_name:
-                d["abbr"] = "{}.{} = {}".format(c_name, item.name, item.value)
-            else:
-                d["abbr"] = "{} = {}".format(item.name, item.value)
+            d["info"] = "{}{}: {} = {}".format(c_name + "." if c_name else "",
+                                               item.name, item.type, item.value)
             if item.type:
-                d["kind"] = item.type
+                d["menu"] = item.type
+            d["kind"] = 'd'
         elif t is classes.GodotMethod:
-            if len(item.args) > 0:
-                d["word"] = "{}(".format(item.name)
-            else:
-                d["word"] = "{}()".format(item.name)
+            d["word"] = "{}(".format(item.name)
+            if len(item.args) == 0:
+                d["word"] += ")"
             args = list(map(lambda a: "{}: {}".format(a.name, a.type), item.args))
             qualifiers = " {}".format(item.qualifiers) if item.qualifiers else ""
             if "vararg" in qualifiers:
                 args.append("...")
-            joined_args = ", ".join(args)
-            if c_name:
-                d["abbr"] = "{}.{}({}){}".format(c_name, item.name, joined_args, qualifiers)
-            else:
-                d["abbr"] = "{}({}){}".format(item.name, joined_args, qualifiers)
-            d["kind"] = item.returns
+            d["info"] = "{} {}{}({}) -> {}".format(qualifiers,
+                                                   c_name + "." if c_name else "",
+                                                   item.name, ", ".join(args), item.returns)
+            args = list(map(lambda a: "{}".format(a.name), item.args))
+            if "vararg" in qualifiers:
+                args.append("...")
+            d["abbr"] = "{}({})".format(item.name, ", ".join(args))
+            d["menu"] = item.returns
+            d["kind"] = 'f'
 
         # User decls
         elif t is script.VarDecl:
             d["word"] = item.name
+            d["info"] = "{}{}".format(item.name,
+                                      ": " + item.type if item.type else "")
             if item.type:
-                d["kind"] = item.type
+                d["menu"] = item.type
+            d["kind"] = 'v'
         elif t is script.ConstDecl:
             d["word"] = item.name
-            if item.value:
-                d["abbr"] = "{} = {}".format(item.name, item.value)
+            d["info"] = "{}{}{}".format(item.name,
+                                        ": " + item.type if item.type else "",
+                                        " = " + item.value if item.value else "")
             if item.type:
-                d["kind"] = item.type
+                d["menu"] = item.type
+            d["kind"] = 'd'
         elif t is script.FuncDecl:
-            if len(item.args) > 0:
-                d["word"] = "{}(".format(item.name)
-            else:
-                d["word"] = "{}()".format(item.name)
-            d["abbr"] = "{}({})".format(item.name, ", ".join(item.args))
+            d["word"] = "{}(".format(item.name)
+            if len(item.args) == 0:
+                d["word"] += ")"
+            args = list(map(lambda a: a.split(":")[0], item.args))
+            d["abbr"] = "{}({})".format(item.name,
+                                        ", ".join(args))
+            d["info"] = "{}({}){}".format(item.name,
+                                          ", ".join(item.args),
+                                          " -> " + item.returns if item.returns else "")
             if item.returns:
-                d["kind"] = item.returns
+                d["menu"] = item.returns
+            d["kind"] = 'f'
         elif t is script.EnumDecl:
             d["word"] = item.name
-            d["kind"] = "enum"
+            d["menu"] = "enum"
+            d["kind"] = 't'
         elif t is script.ClassDecl:
             d["word"] = item.name
-            d["kind"] = "class"
+            d["menu"] = "class"
+            d["kind"] = 't'
     if not d:
         return
     d["dup"] = 1
