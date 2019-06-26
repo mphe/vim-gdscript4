@@ -7,12 +7,21 @@ import util
 import classes
 
 # Regex patterns for user declarations.
-_VAR_PATTERN = "\s*(?:export(?:\(.*\)\s+)?)?var\s+(\w+)(?:\s*:\s*(\w+))?"
-_CONST_PATTERN = "\s*const\s+(\w+)\s*(?::\s*(\w+))?\s*=\s*(.+)"
-_FUNC_PATTERN = "\s*(static\s+)?func\s+(\w+)\(([\w|:|,|\s]*)\)(?:\s*-\>\s*(\w+)\s*)?:"
-_ENUM_PATTERN = "\s*enum\s+(\w+)"
-_ENUM_VALUES_PATTERN = "\s*enum\s+\w+\s*\{(.*)\}"
-_CLASS_PATTERN = "\s*class\s+(\w+)(?:\s+extends\s+(\w+))?"
+_VAR_PATTERN = ("\s*(?:export(?:\(.*\)\s+)?)?"  # optional qualifiers
+                "var\s+(\w+)"                   # variable name
+                "(?:\s*:\s*(\w+))?")            # optional type
+_CONST_PATTERN = ("\s*const\s+(\w+)\s*"  # constant name
+                  "(?::\s*(\w+))?\s*"    # optional type
+                  "=\s*(.+)")            # constant value
+_FUNC_PATTERN = ("\s*(static\s+)?"         # optional qualifiers
+                 "func\s+(\w+)"            # function name
+                 "\(([\w|:|,|\s]*)\)"      # parameter list
+                 "(?:\s*-\>\s*(\w+)\s*)?"  # optional return type
+                 ":")                      # start of function body
+_ENUM_PATTERN = ("\s*enum\s+(\w+)")  # enum name
+_ENUM_VALUES_PATTERN = ("\s*enum\s+\w+\s*\{(.*)\}")  # enum value list
+_CLASS_PATTERN = ("\s*class\s+(\w+)"          # class name
+                  "(?:\s+extends\s+(\w+))?")  # optional base class
 
 # Flags for choosing which decl types to gather.
 VAR_DECLS = 1
