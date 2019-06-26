@@ -17,7 +17,7 @@ syn keyword gdStatement   break continue pass return yield breakpoint
 syn keyword gdKeyword     extends tool signal self class_name void const enum
                         \ var onready export setget preload assert rpc sync
                         \ remote master puppet remotesync mastersync puppetsync
-syn match   gdKeyword     "\v^\s*((static\s*)=func|class)"
+syn match   gdKeyword     "\v^\s*((static\s*)=func\s+|class\s+)"
                         \ nextgroup=gdFunction skipwhite
 syn keyword gdBoolean     true false
 
