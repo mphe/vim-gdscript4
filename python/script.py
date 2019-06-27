@@ -337,7 +337,6 @@ def get_token_chain(line, line_num, start_col):
             return
 
     # If this is the beginning of the chain, search global scope.
-    # TODO: search user funcs and vars with type annotations.
     if (not chain or type(chain[-1]) is SuperAccessorToken or chain[-1].name == "self") and is_method:
         extended_class = classes.get_class(get_extended_class(line_num))
         if extended_class:
@@ -372,11 +371,11 @@ def get_token_chain(line, line_num, start_col):
     else:
         prev_token = chain[-1]
         prev_token_type = type(prev_token)
-        prev_class = None
+        prev_class_name = None
         if prev_token_type is VariableToken:
-            prev_class = classes.get_class(prev_token.type)
+            prev_class_name = prev_token.type
         elif prev_token_type is MethodToken:
-            prev_class = classes.get_class(prev_token.returns)
+            prev_class_name = prev_token.returns
         elif prev_token_type is ClassToken:
             if is_method and name == "new":
                 if not (prev_token.line == -1 and
@@ -393,18 +392,31 @@ def get_token_chain(line, line_num, start_col):
                         chain.append(MethodToken(name, decl.returns, decl.args, None))
                         return chain
                     return
-        if not prev_class:
-            return
-        if is_method:
-            method = prev_class.get_method(name)
-            if method:
-                chain.append(MethodToken(name, method.returns, method.args, method.qualifiers))
-                return chain
-        else:
-            member = prev_class.get_member(name)
-            if member:
-                chain.append(VariableToken(name, member.type))
-                return chain
+        prev_class = classes.get_class(prev_class_name)
+        if prev_class:
+            if is_method:
+                method = prev_class.get_method(name)
+                if method:
+                    chain.append(MethodToken(name, method.returns, method.args, method.qualifiers))
+                    return chain
+            else:
+                member = prev_class.get_member(name)
+                if member:
+                    chain.append(VariableToken(name, member.type))
+                    return chain
+        # prev_token has no builtin type, search for user declaration
+        c_decl = find_decl(line_num, prev_class_name, CLASS_DECLS)
+        if c_decl:
+            if is_method:
+                method = find_decl_down(c_decl.line, name, FUNC_DECLS)
+                if method:
+                    chain.append(MethodToken(name, method.returns, method.args, None))
+                    return chain
+            else:
+                member = find_decl_down(c_decl.line, name, VAR_DECLS)
+                if member:
+                    chain.append(VariableToken(name, member.type))
+                    return chain
 
 
 
