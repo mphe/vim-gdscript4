@@ -1,15 +1,52 @@
-snippet va "typed variable"
-var ${1:name}${2/\w+/: /}${2:type} ${2/\w*/(?0::\:)/}= ${3:value}
+snippet va "variable"
+var ${1:name}${2/\w+/: /}${2:type}${3/\w+/ = /}${3:value}
 endsnippet
 
-snippet co "typed constant"
-const ${1:name}${2/\w+/: /}${2:type} ${2/\w*/(?0::\:)/}= ${3:value}
+snippet co "constant"
+const ${1:name}${2/\w+/: /}${2:type}${3/\w+/ = /}${3:value}
 endsnippet
 
 snippet en "enum"
 enum ${1:OPTIONAL_NAME} {
 	${2:NAME}${3/\w+/ = /}${3:value}
 }
+endsnippet
+
+snippet fu "function"
+func ${1:function_name}($2)${3/\w+/ -> /}${3:void}:
+	${VISUAL}$0
+endsnippet
+
+snippet if "if"
+if ${1:expression}:
+	${VISUAL}$0
+endsnippet
+
+snippet ife "if else"
+if ${1:expression}:
+	${VISUAL}$2
+else
+	${0:pass}
+endsnippet
+
+snippet el "elif"
+elif ${1:expression}:
+	${VISUAL}$0
+endsnippet
+
+snippet wh "while"
+while ${1:expression}:
+	${VISUAL}$0
+endsnippet
+
+snippet fo "for in"
+for ${1:i} in ${2:iterable}:
+	${VISUAL}$0
+endsnippet
+
+snippet for "for in range"
+for ${1:i} in range($2):
+	${VISUAL}$0
 endsnippet
 
 snippet ma "match"
@@ -20,12 +57,53 @@ match ${1:expression}:
 		${4:pass}
 endsnippet
 
-snippet fu "function"
-func ${1:function_name}($2)
-	${VISUAL:pass}$0
+snippet cli "inner class"
+class ${1:ClassName}${2/\w+/ extends /}${2:BaseClass}:
+	func _init($3)${2/\w+/.()/}:
+		${4:pass}
 endsnippet
 
-snippet if "if"
-func ${1:expression}:
-	${VISUAL:pass}$0
+snippet sg "setget"
+var ${1:name}${2/\w+/: /}${2:type}${3/\w+/ = /}${3:value} setget ${1/.*/$0_set/}, ${1/.*/$0_get/} 
+endsnippet
+
+snippet cl "class"
+${3/\w+/extends /}${3:BaseClass}${3/\w+/
+
+/}class_name ${1:ClassName}${2/.+/, "res:\/\//}${2:icon.png}${2/.+/"/}
+
+func _init($4)${3/\w+/.()/}:
+	${5:pass}
+endsnippet
+
+snippet si "signal"
+signal ${1:signal_name}${2/\w+/(/}${2:parameters}${2/.+/)/}
+endsnippet
+
+snippet node "extends Node"
+extends ${1:Node}
+
+func _enter_tree() -> void:
+	pass
+
+func _exit_tree() -> void:
+	pass
+
+func _input(event : InputEvent) -> void:
+	pass
+
+func _unhandled_input(event : InputEvent) -> void:
+	pass
+
+func _unhandled_key_input(event : InputEventKey) -> void:
+	pass
+
+func _physics_process(delta : float) -> void:
+	pass
+
+func _process(delta : float) -> void:
+	pass
+
+func _ready() -> void:
+	pass
 endsnippet
