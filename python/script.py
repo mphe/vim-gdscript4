@@ -362,11 +362,11 @@ def get_token_chain(line, line_num, start_col):
         extended_class = classes.get_class(get_extended_class(line_num))
         if extended_class:
             method = extended_class.get_method(name, search_global=True)
-            if method:
-                return [MethodToken(name, method.returns, method.args, method.qualifiers)]
-            decl = find_decl(line_num, name, FUNC_DECLS)
-            if decl:
-                return [MethodToken(name, decl.returns, decl.args, None)]
+        if method:
+            return [MethodToken(name, method.returns, method.args, method.qualifiers)]
+        decl = find_decl(0, name, FUNC_DECLS)
+        if decl:
+            return [MethodToken(name, decl.returns, decl.args, None)]
     elif not chain or chain[-1].name == "self":
         if not chain and name == "self":
             return [VariableToken(name, None)]
