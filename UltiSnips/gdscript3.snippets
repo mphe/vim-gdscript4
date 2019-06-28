@@ -80,6 +80,14 @@ snippet si "signal"
 signal ${1:signal_name}${2/\w+/(/}${2:parameters}${2/.+/)/}
 endsnippet
 
+snippet lo "load"
+const ${1/(.*\/)?([a-zA-Z0-9]+)_?(\.\w*)*\/?/\u$2/g} = load("res://${1:script.gd}")
+endsnippet
+
+snippet pl "preload"
+const ${1/(.*\/)?([a-zA-Z0-9]+)_?(\.\w*)*\/?/\u$2/g} = preload("res://${1:script.gd}")
+endsnippet
+
 snippet node "extends Node"
 extends ${1:Node}
 
