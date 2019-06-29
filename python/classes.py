@@ -94,7 +94,8 @@ def _load_class_info():
 def _load_class(name):
     path = "{}{}.json".format(_JSON_DIR, name)
     try:
-        obj = json.load(open(path, "r"))
+        with open(path, "r") as file:
+            obj = json.load(file)
     except:
         return
 
