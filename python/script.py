@@ -9,8 +9,9 @@ import classes
 # Regex patterns for user declarations.
 _VAR_PATTERN = ("\s*(?:export(?:\(.*\)\s+)?)?"  # optional qualifiers
                 "var\s+(\w+)"                   # variable name
-                "(?:\s*:\s*(\w+))?"             # optional type
-                "(?:\s*:=\s*(.+))?")            # optional inferred type
+                "(?:\s*:\s*(\w+).*)?"           # optional type
+                "(?:\s*:=\s*(.+?))?"            # optional inferred type
+                "\s*(?:#.*)?$")                 # trailing whitespace or comment
 _CONST_PATTERN = ("\s*const\s+(\w+)\s*"  # constant name
                   "(?::\s*(\w+))?\s*"    # optional type
                   "=\s*(.+)")            # constant value
@@ -60,7 +61,7 @@ def _get_decl(lnum, flags):
             if m.group(2):
                 var_type = m.group(2)
             elif m.group(3):
-                chain = get_token_chain(line, lnum, m.span(3)[1])
+                chain = get_token_chain(line, lnum, m.end(3))
                 if not chain:
                     var_type = None
                 elif type(chain[-1]) is VariableToken:
