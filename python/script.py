@@ -17,10 +17,10 @@ _CONST_PATTERN = ("\s*const\s+(\w+)\s*"  # constant name
                   "(:)?=\s*(.+?)"        # constant value
                   "\s*(?:#.*)?$")        # trailing whitespace or comment
 _FUNC_PATTERN = ("\s*(static\s+)?"         # optional qualifiers
-                 "func\s+(\w+)"            # function name
+                 "func\s+(\w+)\s*"         # function name
                  "\(([\w|:|,|\s]*)\)"      # parameter list
                  "(?:\s*-\>\s*(\w+)\s*)?"  # optional return type
-                 ":")                      # start of function body
+                 "\s*:")                   # start of function body
 _ENUM_PATTERN = ("\s*enum\s+(\w+)")  # enum name
 _ENUM_VALUES_PATTERN = ("\s*enum\s+\w+\s*\{(.*)\}")  # enum value list
 _CLASS_PATTERN = ("\s*class\s+(\w+)"          # class name

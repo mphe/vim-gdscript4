@@ -22,7 +22,7 @@ syn match   gdKeyword     "\v^\s*((static\s*)=func\s+|class\s+)"
 syn keyword gdBoolean     true false
 
 syn match   gdMember   "\v<(\.)@<=[a-z_]+\w*>"
-syn match   gdFunction "\v<\w*>(\()@="
+syn match   gdFunction "\v<\w*>\s*(\()@="
 syn match   gdSignal "\v(<signal>\s+)@<=<\w+>"
 syn match   gdSetGet "\v(<setget>\s+)@<=<\w+>"
 syn match   gdSetGet "\v(<setget>\s+\w*\s*,\s*)@<=<\w+>"
