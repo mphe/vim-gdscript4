@@ -13,8 +13,9 @@ _VAR_PATTERN = ("\s*(?:export(?:\(.*\)\s+)?)?"  # optional qualifiers
                 "(?:\s*:=\s*(.+?))?"            # optional inferred type
                 "\s*(?:#.*)?$")                 # trailing whitespace or comment
 _CONST_PATTERN = ("\s*const\s+(\w+)\s*"  # constant name
-                  "(?::\s*(\w+))?\s*"    # optional type
-                  "=\s*(.+)")            # constant value
+                  "(?::\s*(\w+).*)?\s*"  # optional type
+                  "(:)?=\s*(.+?)"        # constant value
+                  "\s*(?:#.*)?$")        # trailing whitespace or comment
 _FUNC_PATTERN = ("\s*(static\s+)?"         # optional qualifiers
                  "func\s+(\w+)"            # function name
                  "\(([\w|:|,|\s]*)\)"      # parameter list
@@ -61,19 +62,18 @@ def _get_decl(lnum, flags):
             if m.group(2):
                 var_type = m.group(2)
             elif m.group(3):
-                chain = get_token_chain(line, lnum, m.end(3))
-                if not chain:
-                    var_type = None
-                elif type(chain[-1]) is VariableToken:
-                    var_type = chain[-1].type
-                elif type(chain[-1]) is MethodToken:
-                    var_type = chain[-1].returns
+                var_type = get_inferred_type(line, lnum, m.end(3))
             return VarDecl(lnum, m.group(1), var_type)
 
     if flags & CONST_DECLS:
         m = re.match(_CONST_PATTERN, line)
         if m:
-            return ConstDecl(lnum, m.group(1), m.group(3), m.group(2))
+            const_type = None
+            if m.group(2):
+                const_type = m.group(2)
+            elif m.group(3):
+                const_type = get_inferred_type(line, lnum, m.end(4))
+            return ConstDecl(lnum, m.group(1), m.group(4), const_type)
 
     if flags & FUNC_DECLS:
         m = re.match(_FUNC_PATTERN, line)
@@ -95,6 +95,19 @@ def _get_decl(lnum, flags):
         m = re.match(_CLASS_PATTERN, line)
         if m:
             return ClassDecl(lnum, m.group(1), m.group(2))
+
+
+# Get the resulting type of an assignment to the specified token chain.
+# col must point at the last character of the token chain
+def get_inferred_type(line, lnum, col):
+    chain = get_token_chain(line, lnum, col)
+    if not chain:
+        return None
+    elif type(chain[-1]) is VariableToken:
+        return chain[-1].type
+    elif type(chain[-1]) is MethodToken:
+        return chain[-1].returns
+
 
 # Map function arguments to VarDecls.
 # Arguments are treated as VarDecls for simplicity's sake.
