@@ -243,7 +243,7 @@ def iter_static_decls(start_line, flags):
 
 # Search for a user decl with a particular name.
 def find_decl(start_line, name, flags=None):
-    down_search_start = 1
+    down_search_start = 0
     for decl in iter_decls(start_line, -1, flags | CLASS_DECLS):
         if type(decl) == ClassDecl:
             if flags & CLASS_DECLS and decl.name == name:

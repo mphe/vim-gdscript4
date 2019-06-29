@@ -124,7 +124,7 @@ def complete_dot():
 # If 'include_globals' is True, add items from global scope.
 def complete_script(include_globals):
     # Complete user decls.
-    down_search_start = 1
+    down_search_start = 0
     for decl in script.iter_decls(util.get_cursor_line_num(), direction=-1):
         decl_type = type(decl)
         if decl_type == script.ClassDecl:
