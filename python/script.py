@@ -82,8 +82,10 @@ def _get_decl(lnum, flags):
             name = m.group(2)
             args = m.group(3)
             returns = m.group(4)
-            if args:
+            if args and not re.match("^\s*$", args):
                 args = ["".join(a.split()).replace(":",": ") for a in args.split(",")]
+            else:
+                args = []
             return FuncDecl(lnum, static, name, args, returns)
 
     if flags & ENUM_DECLS:
