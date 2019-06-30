@@ -1,9 +1,16 @@
-setlocal commentstring=#\ %s
-
 if exists("g:gdscript3_loaded")
+    setlocal comments=:#
+    setlocal commentstring=#\ %s
+    setlocal formatoptions+=croql formatoptions-=t
+    setlocal isfname+=:
+    setlocal include=\\v^[^#]*(load\|preload\|extends\\s*[\"\'])
+    setlocal includeexpr=substitute(v:fname,'res\\\:\/\/\\(\.\*\\)','\\1','g')
+    execute s:py_cmd . " vim.command('setlocal path^=' + util.get_project_dir())"
     finish
 endif
 let g:gdscript3_loaded=1
+
+au BufReadCmd res://* exe "bd!|edit ".substitute(expand("<afile>"),"res://*","","") | doauto BufRead
 
 if !has("python3") && !has("python")
     finish
@@ -101,3 +108,6 @@ endif
 
 " Configure Syntastic checker
 let g:syntastic_gdscript3_checkers = ['godot_server']
+
+" Run once again after plugin was loaded to set local option
+source <sfile>
