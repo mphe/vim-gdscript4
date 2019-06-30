@@ -6,6 +6,7 @@ if exists("g:gdscript3_loaded")
     setlocal include=\\v^[^#]*(load\|preload\|extends\\s*[\"\'])
     setlocal includeexpr=substitute(v:fname,'res\\\:\/\/\\(\.\*\\)','\\1','g')
     execute s:py_cmd . " vim.command('setlocal path^=' + util.get_project_dir())"
+    setlocal omnifunc=GDScriptComplete
     finish
 endif
 let g:gdscript3_loaded=1
@@ -26,7 +27,7 @@ endif
 
 execute s:pyfile_cmd . " " . expand('<sfile>:p:h') . "/../python/init.py"
 
-fun! GDScriptComplete(findstart, base)
+fun GDScriptComplete(findstart, base)
     if a:findstart == 1
         let line = getline('.')
         let start = col('.') - 1
@@ -49,7 +50,6 @@ fun! GDScriptComplete(findstart, base)
         endif
     endif
 endfun
-set omnifunc=GDScriptComplete
 
 " Configure for common completion frameworks.
 
