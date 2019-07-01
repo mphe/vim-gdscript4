@@ -7,6 +7,8 @@ if exists("g:gdscript3_loaded")
     setlocal includeexpr=substitute(v:fname,'res\\\:\/\/\\(\.\*\\)','\\1','g')
     execute s:py_cmd . " vim.command('setlocal path^=' + util.get_project_dir())"
     setlocal omnifunc=GDScriptComplete
+    setlocal foldlevel=99
+    setlocal foldmethod=syntax
     finish
 endif
 let g:gdscript3_loaded=1
