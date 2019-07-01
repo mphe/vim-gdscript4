@@ -8,6 +8,7 @@ let b:current_syntax = "gdscene"
 let s:save_cpo = &cpo
 set cpo&vim
 
+syn match   gdComment    ";.*"
 syn keyword gdKeyword    contained gd_scene ext_resource sub_resource node
                                  \ connection gd_resource resource
 syn keyword gdBoolean    contained false true
@@ -26,6 +27,7 @@ syn match   gdHeader    "\v^\[.*\]"        contained containedin=gdSection conta
 syn match   gdValue      "\v[=:].*"hs=s+1  contains=ALLBUT,gdHeader
 syn region  gdDictionary start="{" end="}" contains=gdString,gdValue,gdDelimiter keepend transparent fold
 
+hi def link gdComment    Comment
 hi def link gdOperator   Operator
 hi def link gdDelimiter  Delimiter
 hi def link gdKeyword    Keyword
