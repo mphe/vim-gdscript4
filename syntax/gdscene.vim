@@ -1,4 +1,4 @@
-" Syntax file for Godot's tscn and tres files
+" Syntax file for Godot's tscn, tres and project.godot files
 
 if exists ("b:current_syntax")
     finish
