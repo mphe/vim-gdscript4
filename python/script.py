@@ -111,6 +111,28 @@ def get_inferred_type(line, lnum, col):
         return chain[-1].returns
 
 
+# Get the namespace in which the object under the cursor is declared, e.g. the
+# following example with the cursor on 'get_format' will return Image.get_format
+#
+# var mytex: Texture = Texture.new()
+# mytex.get_data().get_format()
+def get_decl_namespace(line, lnum, col):
+    chain = get_token_chain(line, lnum, col)
+    if not chain:
+        return None
+    ret = [chain[-1].name]
+
+    if len(chain) >= 2:
+        if type(chain[-2]) is MethodToken:
+            ret.append(chain[-2].returns)
+        elif type(chain[-2]) is VariableToken:
+            ret.append(chain[-2].type)
+        elif type(chain[-2]) is ClassToken or type(chain[-2]) is EnumToken:
+            ret.append(chain[-2].name)
+
+    return ret
+
+
 # Map function arguments to VarDecls.
 # Arguments are treated as VarDecls for simplicity's sake.
 # If the function overrides a built-in method, the arg types are mapped as well.
@@ -327,6 +349,27 @@ def get_enum_values(line_num):
         return list(filter(lambda v: v, map(map_value, values)))
 
 
+# From start_col on, move to the right until the end of the token. Use before
+# get_token_chain if cursor isn't on the end of a token.
+def get_token_end(line, line_num, start_col):
+    i = start_col - 1
+    paren_count = 0
+
+    while True:
+        i += 1
+        char = line[i]
+        if char == ")":
+            paren_count += 1
+            if paren_count >= 0:
+                return i + 1
+        elif char == "(":
+            paren_count -= 1
+        if paren_count == 0 and not (char.isalnum() or char == "_"):
+            return i
+        elif i == len(line)-1:
+            return i+1
+
+
 # A token chain is a group of tokens chained via dot accessors.
 # "Token" is a loose term referring to anything that produces a value.
 # Example:
@@ -334,6 +377,7 @@ def get_enum_values(line_num):
 # 'texture', 'get_data', and 'get_pixel' all produce values, and are therefore tokens.
 #
 # A token chain is only considered valid if every token has a discernible type.
+# start_col is expected to be the end of a token.
 def get_token_chain(line, line_num, start_col):
     i = start_col
     paren_count = 0

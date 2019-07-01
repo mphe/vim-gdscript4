@@ -19,6 +19,37 @@ endif
 
 execute s:pyfile_cmd . " " . expand('<sfile>:p:h') . "/../python/init.py"
 
+
+fun! GDScriptOpenDocumentation(keyword)
+    let url = "https://docs.godotengine.org/en/stable/"
+
+    " If the cursor is on the keyword we can try to do a context aware keyword
+    " lookup. (e.g. The keyword may be method a method with multiple
+    " implementations, so first get the corresponding class and then open the
+    " correct docs.) 
+    " Otherwise we have only the keyword as a parameter and our best guess is to
+    " just search the docs for the keyword.
+    if keyword ==# expand('<cword>')
+        let decl_ns = call GDScriptGetDeclNamespace()
+    else
+        let url .= "search.html?q=" . a:keyword
+        call system("echo " . l:url . " | xargs xdg-open")
+    endif
+endfun
+command -nargs=1 KeywordprgGDScript3 :call GDScriptOpenDocumentation("<args>")
+
+
+fun! GDScriptGetDeclNamespace()
+    execute s:py_cmd . " gdscript_get_decl_namespace()"
+    if exists("gdscript_decl_namespace")
+        return gdscript_decl_namespace
+    else
+        return []
+    endif
+endfun
+command GDScriptGetDeclNamespace :echo GDScriptGetDeclNamespace()
+
+
 fun! GDScriptComplete(findstart, base)
     if a:findstart == 1
         let line = getline('.')

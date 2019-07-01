@@ -33,6 +33,20 @@ def gdscript_complete():
     completions = completer.get_completions()
     vim.command("let gdscript_completions = " + str(completions))
 
+
+def gdscript_get_decl_namespace():
+    util.clear_cache()
+
+    lnum = util.get_cursor_line_num()
+    col = util.get_cursor_col_num()
+    line = util.get_line(lnum)
+
+    col = script.get_token_end(line, lnum, col)
+    inf_type = script.get_decl_namespace(line, lnum, col)
+
+    vim.command("let gdscript_decl_namespace = {}".format(str(inf_type)))
+
+
 def echodoc_search():
     util.clear_cache()
 
