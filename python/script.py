@@ -111,24 +111,35 @@ def get_inferred_type(line, lnum, col):
         return chain[-1].returns
 
 
-# Get the namespace in which the object under the cursor is declared, e.g. the
-# following example with the cursor on 'get_format' will return Image.get_format
+# Get available information for the symbol under the cursor. Returns a dict
+# which may contain the following values:
 #
-# var mytex: Texture = Texture.new()
-# mytex.get_data().get_format()
-def get_decl_namespace(line, lnum, col):
+#   name: Identifier of the symbol
+#   kind: 'method', 'variable', 'class' or 'enum'
+#   class: The class in which this symbol is defined
+def get_symbol_info(line, lnum, col):
     chain = get_token_chain(line, lnum, col)
+    ret = {}
     if not chain:
         return None
-    ret = [chain[-1].name]
+    if len(chain) >= 1:
+        ret['name'] = chain[-1].name
+        if type(chain[-1]) is MethodToken:
+            ret['kind'] = 'method'
+        elif type(chain[-1]) is VariableToken:
+            ret['kind'] = 'variable'
+        elif type(chain[-1]) is ClassToken:
+            ret['kind'] = 'class'
+        elif type(chain[-1]) is EnumToken:
+            ret['kind'] = 'enum'
 
     if len(chain) >= 2:
         if type(chain[-2]) is MethodToken:
-            ret.append(chain[-2].returns)
+            ret['class'] = chain[-2].returns
         elif type(chain[-2]) is VariableToken:
-            ret.append(chain[-2].type)
+            ret['class'] = chain[-2].type
         elif type(chain[-2]) is ClassToken or type(chain[-2]) is EnumToken:
-            ret.append(chain[-2].name)
+            ret['class'] = chain[-2].name
 
     return ret
 

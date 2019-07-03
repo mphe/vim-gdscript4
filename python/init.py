@@ -42,9 +42,9 @@ def gdscript_get_decl_namespace():
     line = util.get_line(lnum)
 
     col = script.get_token_end(line, lnum, col)
-    inf_type = script.get_decl_namespace(line, lnum, col)
+    sym_info = script.get_symbol_info(line, lnum, col)
 
-    vim.command("let gdscript_decl_namespace = {}".format(str(inf_type)))
+    vim.command("let gdscript_decl_namespace = {}".format(str(sym_info)))
 
 
 def echodoc_search():
