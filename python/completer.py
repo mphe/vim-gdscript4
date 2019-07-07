@@ -203,7 +203,8 @@ def build_completion(item, c_name=None):
             d["word"] = "{}(".format(item.name)
             if len(item.args) == 0:
                 d["word"] += ")"
-            args = list(map(lambda a: "{}: {}".format(a.name, a.type), item.args))
+            args = list(map(lambda a: "{}: {}{}".format(
+                a.name, a.type, " = " + a.default if a.default else ""), item.args))
             qualifiers = " {}".format(item.qualifiers) if item.qualifiers else ""
             if "vararg" in qualifiers:
                 args.append("...")
