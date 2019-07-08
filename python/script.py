@@ -416,7 +416,7 @@ def get_token_chain(line, line_num, start_col):
     name = line[end_col:start_col]
 
     if not name:
-        if util.get_syn_attr(col_num=i+1) == "gdString":
+        if line[i] == '"' or line[i] == '\'':
             return [VariableToken(None, "String")]
         else:
             #
