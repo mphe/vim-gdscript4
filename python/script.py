@@ -433,6 +433,8 @@ def get_token_chain(line, line_num, start_col):
         extended_class = classes.get_class(get_extended_class(line_num))
         if extended_class:
             method = extended_class.get_method(name, search_global=True)
+        else:
+            method = classes.get_global_scope().get_method(name, search_global=True)
         if method:
             return [MethodToken(name, method.returns, method.args, method.qualifiers)]
         decl = find_decl(0, name, FUNC_DECLS)
@@ -454,8 +456,10 @@ def get_token_chain(line, line_num, start_col):
             extended_class = classes.get_class(get_extended_class(line_num))
             if extended_class:
                 member = extended_class.get_member(name, search_global=True)
-                if member:
-                    return [VariableToken(name, member.type)]
+            else:
+                member = classes.get_global_scope().get_member(name, search_global=True)
+            if member:
+                return [VariableToken(name, member.type)]
             c = classes.get_class(name)
             if c:
                 return [ClassToken(name, -1)]
