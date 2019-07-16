@@ -29,12 +29,18 @@ fun! GDScriptOpenDocumentation(keyword)
     " correct docs.) 
     " Otherwise we have only the keyword as a parameter and our best guess is to
     " just search the docs for the keyword.
-    if keyword ==# expand('<cword>')
-        let decl_ns = call GDScriptGetDeclNamespace()
+    if a:keyword ==# expand('<cword>')
+        let sym_info = GDScriptGetDeclNamespace() 
+        let url .= "classes/class_" . tolower(sym_info['class']) . ".html"
+        if sym_info['kind'] !=# 'class'
+            let url .= "#class-" . tolower(sym_info['class']) . "-"
+            let url .= sym_info['kind'] . "-"
+            let url .= tr(tolower(sym_info['name']), "_", "-")
+        endif
     else
         let url .= "search.html?q=" . a:keyword
-        call system("echo " . l:url . " | xargs xdg-open")
     endif
+    call system("echo " . l:url . " | xargs xdg-open")
 endfun
 command -nargs=1 KeywordprgGDScript3 :call GDScriptOpenDocumentation("<args>")
 

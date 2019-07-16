@@ -127,9 +127,10 @@ def get_symbol_info(line, lnum, col):
         if type(chain[-1]) is MethodToken:
             ret['kind'] = 'method'
         elif type(chain[-1]) is VariableToken:
-            ret['kind'] = 'variable'
+            ret['kind'] = 'property'
         elif type(chain[-1]) is ClassToken:
             ret['kind'] = 'class'
+            ret['class'] = chain[-1].name
         elif type(chain[-1]) is EnumToken:
             ret['kind'] = 'enum'
 
