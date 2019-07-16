@@ -148,3 +148,19 @@ endif
 
 " Configure Syntastic checker
 let g:syntastic_gdscript3_checkers = ['godot_server']
+
+" Configure tagbar
+if !exists('g:tagbar_type_gdscript3')
+    let g:tagbar_type_gdscript3 = {
+        \'ctagstype' :'gdscript3',
+        \'kinds':[
+            \'c:constants',
+            \'e:exports',
+            \'o:onready',
+            \'p:preloads',
+            \'s:signals',
+            \'f:functions',
+        \]
+    \}
+endif
+let g:tagbar_type_gdscript3.deffile = expand('<sfile>:p:h:h') . '/ctags/gdscript3.ctags'
