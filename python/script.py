@@ -444,6 +444,17 @@ def get_token_chain(line, line_num, start_col):
     elif not chain or chain[-1].name == "self":
         if not chain and name == "self":
             return [VariableToken(name, None)]
+        extended_class = classes.get_class(get_extended_class(line_num))
+        if extended_class:
+            member = extended_class.get_member(name, search_global=True)
+        else:
+            member = classes.get_global_scope().get_member(name, search_global=True)
+        if member:
+            return [VariableToken(name, member.type)]
+        c = classes.get_class(name)
+        if c:
+            return [ClassToken(name, -1)]
+        # no builtin type, search for user decl
         decl = find_decl(line_num, name, ENUM_DECLS | CLASS_DECLS | VAR_DECLS)
         if decl:
             decl_type = type(decl)
@@ -453,17 +464,6 @@ def get_token_chain(line, line_num, start_col):
                 return [ClassToken(name, decl.line)]
             elif decl_type is VarDecl:
                 return [VariableToken(name, decl.type)]
-        else:
-            extended_class = classes.get_class(get_extended_class(line_num))
-            if extended_class:
-                member = extended_class.get_member(name, search_global=True)
-            else:
-                member = classes.get_global_scope().get_member(name, search_global=True)
-            if member:
-                return [VariableToken(name, member.type)]
-            c = classes.get_class(name)
-            if c:
-                return [ClassToken(name, -1)]
     # Not the beginning of a chain, so get the type of the previous token.
     else:
         prev_token = chain[-1]
