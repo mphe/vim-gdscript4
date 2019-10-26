@@ -2,6 +2,7 @@ function! coc#source#gdscript3#init() abort
   return {
         \'shortcut': 'GDS3',
         \'filetypes': ['gdscript3'],
+        \'triggerCharacters': ['.'],
         \}
 endfunction
 
