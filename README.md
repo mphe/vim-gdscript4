@@ -26,6 +26,7 @@ Alternatively, install a completion plugin (recommended). The following plugins 
 
 1. [SuperTab](https://github.com/ervandew/supertab): Shows completions when Tab is pressed.
 2. [Deoplete](https://github.com/Shougo/deoplete.nvim): Asynchronous completion framework that shows completions as you type. 
+3. [coc.nvim](https://github.com/neoclide/coc.nvim): Intellisense engine for vim8 & neovim, full language server protocol support as VSCode. 
 
 Any plugin that supports omnicompletion should also work, but will likely require additional configuration.
 
