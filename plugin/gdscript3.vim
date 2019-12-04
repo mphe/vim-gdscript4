@@ -26,16 +26,20 @@ fun! GDScriptOpenDocumentation(keyword)
     " If the cursor is on the keyword we can try to do a context aware keyword
     " lookup. (e.g. The keyword may be method a method with multiple
     " implementations, so first get the corresponding class and then open the
-    " correct docs.) 
+    " correct docs.)
     " Otherwise we have only the keyword as a parameter and our best guess is to
     " just search the docs for the keyword.
     if a:keyword ==# expand('<cword>')
-        let sym_info = GDScriptGetDeclNamespace() 
-        let url .= "classes/class_" . tolower(sym_info['class']) . ".html"
-        if sym_info['kind'] !=# 'class'
-            let url .= "#class-" . tolower(sym_info['class']) . "-"
-            let url .= sym_info['kind'] . "-"
-            let url .= tr(tolower(sym_info['name']), "_", "-")
+        let sym_info = GDScriptGetDeclNamespace()
+        if has_key(sym_info, 'class')
+            let url .= "classes/class_" . tolower(sym_info['class']) . ".html"
+            if sym_info['kind'] !=# 'class'
+                let url .= "#class-" . tolower(sym_info['class']) . "-"
+                let url .= sym_info['kind'] . "-"
+                let url .= tr(tolower(sym_info['name']), "_", "-")
+            endif
+        else
+            let url .= "search.html?q=" . a:keyword
         endif
     else
         let url .= "search.html?q=" . a:keyword
@@ -50,7 +54,7 @@ fun! GDScriptGetDeclNamespace()
     if exists("gdscript_decl_namespace")
         return gdscript_decl_namespace
     else
-        return []
+        return {}
     endif
 endfun
 command GDScriptGetDeclNamespace :echo GDScriptGetDeclNamespace()
