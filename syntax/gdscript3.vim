@@ -96,3 +96,5 @@ hi def link gdTodo    Todo
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
+
+echom "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
