@@ -6,7 +6,7 @@ This plugin adds syntax highlighting and completion for the most recent version 
 # Installation
 Using [vim-plug](https://github.com/junegunn/vim-plug):
 
-    Plug 'calviken/vim-gdscript3'
+    Plug 'clktmr/vim-gdscript3'
     
 Or any other plugin manager of your choice.
 
@@ -31,8 +31,6 @@ Alternatively, install a completion plugin (recommended). The following plugins 
 Any plugin that supports omnicompletion should also work, but will likely require additional configuration.
 
 [echodoc](https://github.com/Shougo/echodoc.vim) is also supported, for showing method signatures in the echo area (useful for methods with lots of parameters).
-
-For a non-comprehensive list of features, see this [wiki page](https://github.com/calviken/vim-gdscript3/wiki/Completion)
 
 # Linting
 
