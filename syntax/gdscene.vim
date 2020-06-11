@@ -8,7 +8,7 @@ let b:current_syntax = "gdscene"
 let s:save_cpo = &cpo
 set cpo&vim
 
-syn match   gdComment    ";.*"
+syn match   gdComment    ";.*" contains=@Spell
 syn keyword gdKeyword    contained gd_scene ext_resource sub_resource node
                                  \ connection gd_resource resource
 syn keyword gdBoolean    contained false true

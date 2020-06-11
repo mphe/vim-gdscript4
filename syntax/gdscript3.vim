@@ -50,7 +50,7 @@ syn match   gdFloat       "\v<\d*\.\d+(\.)@!>"
 syn match   gdFloat       "\v<\d*\.=\d+(e-=\d+)@="
 syn match   gdExponent    "\v(\d*\.=\d+)@<=e-=\d+>"
 
-syn match   gdComment "\v#.*$"
+syn match   gdComment "\v#.*$" contains=@Spell
 syn keyword gdTodo    TODO FIXME XXX NOTE BUG HACK OPTIMIZE containedin=gdComment
 
 syn region gdFunctionFold
