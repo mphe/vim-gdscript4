@@ -11,7 +11,7 @@ set cpo&vim
 syn keyword gdConditional if elif else match
 syn keyword gdRepeat      for while
 syn keyword gdOperator    and or not is in as
-syn match   gdOperator    "\V&&\|||\|!\|&\|^\||\|~\|*\|/\|%\|+\|-\|=\|<\|>\|:"
+syn match   gdOperator    "\V&&\|||\|!\|&\|^\||\|~\|*\|/\|%\|+\|-\|=\|<\|>\|:\|$\|@"
 syn match   gdDelimiter   "\V(\|)\|[\|]\|{\|}"
 syn keyword gdStatement   break continue pass return yield breakpoint
 syn keyword gdKeyword     extends tool signal self class_name void const enum
@@ -80,7 +80,7 @@ hi def link gdSetGet   Function
 hi def link gdNull     Constant
 hi def link gdClass    Type
 hi def link gdConstant Constant
-hi def link gdNode     Identifier
+hi def link gdNode     String
 
 hi def link gdString   String
 hi def link gdEscape   Special
