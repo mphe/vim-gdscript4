@@ -11,7 +11,7 @@ set cpo&vim
 syn keyword gdConditional if elif else match
 syn keyword gdRepeat      for while
 syn keyword gdOperator    and or not is in as
-syn match   gdOperator    "\V&&\|||\|!\|&\|^\||\|~\|*\|/\|%\|+\|-\|=\|<\|>\|:"
+syn match   gdOperator    "\V&&\|||\|!\|&\|^\||\|~\|*\|/\|%\|+\|-\|=\|<\|>\|:\|$\|@"
 syn match   gdDelimiter   "\V(\|)\|[\|]\|{\|}"
 syn keyword gdStatement   break continue pass return yield breakpoint
 syn keyword gdKeyword     extends tool signal self class_name void const enum
@@ -32,7 +32,7 @@ syn keyword gdClass     int float bool
 syn match   gdClass     "\v<\u\w+>"
 syn match   gdConstant  "\v<[A-Z_]+[A-Z0-9_]*>"
 syn keyword gdClass     AABB IP JSON OS RID
-syn match   gdNode      "\v\$\a+\w*"
+syn match   gdNode      "\v\$@<=\a+\w*"
 
 syn region  gdString      start='\v\"' end='\v\"'
 syn region  gdString      start='\v\'' end='\v\''
@@ -50,7 +50,7 @@ syn match   gdFloat       "\v<\d*\.\d+(\.)@!>"
 syn match   gdFloat       "\v<\d*\.=\d+(e-=\d+)@="
 syn match   gdExponent    "\v(\d*\.=\d+)@<=e-=\d+>"
 
-syn match   gdComment "\v#.*$"
+syn match   gdComment "\v#.*$" contains=@Spell
 syn keyword gdTodo    TODO FIXME XXX NOTE BUG HACK OPTIMIZE containedin=gdComment
 
 syn region gdFunctionFold
@@ -80,7 +80,7 @@ hi def link gdSetGet   Function
 hi def link gdNull     Constant
 hi def link gdClass    Type
 hi def link gdConstant Constant
-hi def link gdNode     Identifier
+hi def link gdNode     String
 
 hi def link gdString   String
 hi def link gdEscape   Special

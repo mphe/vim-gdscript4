@@ -6,8 +6,8 @@ This plugin adds filetype set, syntax highlighting, snippets and ctags for the m
 # Installation
 Using [vim-plug](https://github.com/junegunn/vim-plug):
 
-    Plug 'rafaeldelboni/vim-gdscript3'
-
+    Plug 'clktmr/vim-gdscript3'
+    
 Or any other plugin manager of your choice.
 
 # Screenshot
