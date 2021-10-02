@@ -16,7 +16,8 @@ Or any other plugin manager of your choice.
 *Colorscheme: [base16-eighties](https://github.com/chriskempson/base16-vim)*
 
 # Completion, Go To Definition and Error Linting
-I highly recommend using [coc.nvim](https://github.com/neoclide/coc.nvim) with the LSP and the following configuration:
+
+## [coc.nvim](https://github.com/neoclide/coc.nvim)  configuration
 ```json
   "languageserver": {
       "godot": {
@@ -26,7 +27,16 @@ I highly recommend using [coc.nvim](https://github.com/neoclide/coc.nvim) with t
       }
     }
 ```
-Ps. This will only works after [this PR](https://github.com/godotengine/godot/pull/35864) gets merged and released on Godot.
-
+## [ALE](https://github.com/dense-analysis/ale) configuration
+```vimscript
+if exists(':ALEInfo')
+	call ale#linter#Define('gdscript3', {
+	\   'name': 'godot',
+	\   'lsp': 'socket',
+	\   'address': '127.0.0.1:6008',
+	\   'project_root': 'project.godot',
+	\})
+endif
+```
 # License
 MIT
