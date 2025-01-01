@@ -1,7 +1,10 @@
 # Description
 GDScript is the primary scripting language used by the [Godot Game Engine](https://godotengine.org/).
 
-This plugin adds filetype set, syntax highlighting, snippets and ctags for the most recent version (3.2 at the time of writing).
+This plugin adds filetype set, syntax highlighting, snippets and ctags for Godot 4.x.
+
+The project has been forked and adapted from [Rubonnek/vim-gdscript3](https://github.com/Rubonnek/vim-gdscript3).
+
 
 # Installation
 ## Using [vim-plug](https://github.com/junegunn/vim-plug):
