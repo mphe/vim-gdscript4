@@ -1,12 +1,12 @@
 " Syntax file for GDScript
 
-if exists("b:current_syntax")
+if exists('b:current_syntax')
     finish
 endif
-let b:current_syntax = "gdscript3"
+let b:current_syntax = 'gdscript3'
 
-let s:save_cpo = &cpo
-set cpo&vim
+let s:save_cpo = &cpoptions
+set cpoptions&vim
 
 syn keyword gdConditional if elif else match
 syn keyword gdRepeat      for while
@@ -94,5 +94,5 @@ hi def link gdEscapeError Error
 hi def link gdComment Comment
 hi def link gdTodo    Todo
 
-let &cpo = s:save_cpo
+let &cpoptions = s:save_cpo
 unlet s:save_cpo
