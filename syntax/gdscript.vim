@@ -3,7 +3,7 @@
 if exists('b:current_syntax')
     finish
 endif
-let b:current_syntax = 'gdscript3'
+let b:current_syntax = 'gdscript'
 
 
 " Whether to highlight node references wrapped in strings as a whole (1) or use string literal highlighting (0).
