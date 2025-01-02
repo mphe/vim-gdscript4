@@ -88,7 +88,7 @@ hi def link gdDelimiter   Delimiter
 hi def link gdStatement   Statement
 hi def link gdKeyword     Keyword
 hi def link gdBoolean     Boolean
-hi def link gdDecorator   Macro
+hi def link gdDecorator   Function
 
 hi def link gdMember   Identifier
 hi def link gdFunction Function
