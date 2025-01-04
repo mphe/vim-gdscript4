@@ -54,7 +54,7 @@ require'lspconfig'.gdscript.setup{}
 
 ![Screenshot](screenshot.png)
 
-*Colorscheme: [base16-eighties](https://github.com/chriskempson/base16-vim)*
+*Colorscheme: [Solarized](https://github.com/ishan9299/nvim-solarized-lua)*
 
 
 # License
