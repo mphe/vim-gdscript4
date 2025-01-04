@@ -1,15 +1,9 @@
-" Syntax file for GDScript
+" Overwrites the Vim's default syntax definition.
 
 if exists('b:current_syntax')
     finish
 endif
 let b:current_syntax = 'gdscript'
-
-
-" Whether to highlight node references wrapped in strings as a whole (1) or use string literal highlighting (0).
-" E.g. %"some node with spaces" could be highlighted as a whole or individually with
-" % -> gdNode and "some node with spaces" -> gdString.
-let g:gdscript_highlight_whole_string_node_references = get(g:, 'gdscript_highlight_whole_string_node_references', 1)
 
 
 let s:save_cpo = &cpoptions
