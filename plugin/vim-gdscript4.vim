@@ -20,6 +20,11 @@ let g:gdscript_use_python_indent = get(g:, 'gdscript_use_python_indent', 0)
 
 " }}}
 
+augroup au_godot_res_handling
+    autocmd!
+    autocmd BufReadCmd res://* exe "bd!|edit ".substitute(expand("<afile>"),"res://*","","") | doauto BufRead
+augroup END
+
 let g:tagbar_type_gdscript = {
             \ 'ctagsargs' : '-f- --format=2 --excmd=pattern --fields=nksSa --extras= --sort=no --language-force=gdscript',
             \ 'kinds': [
