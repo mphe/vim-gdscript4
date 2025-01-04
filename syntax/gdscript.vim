@@ -15,7 +15,7 @@ syn keyword gdOperator    and or not is in as
 syn match   gdOperator    "\V&&\|||\|!\|&\|^\||\|~\|*\|/\|%\|+\|-\|=\|<\|>\|:\|$"
 syn match   gdDelimiter   "\V(\|)\|[\|]\|{\|}\|@"
 syn keyword gdStatement   break continue pass return yield breakpoint
-syn keyword gdKeyword     extends signal self class_name void const enum super
+syn keyword gdKeyword     extends signal self class_name const enum super
                         \ var setget assert rpc sync set get await
                         \ remote master puppet remotesync mastersync puppetsync
 syn match   gdKeyword     "\v^\s*((static\s*)=func\s+|class\s+)"
@@ -30,7 +30,7 @@ syn match   gdSetGet "\v(<setget>\s+)@<=<\w+>"
 syn match   gdSetGet "\v(<setget>\s+\w*\s*,\s*)@<=<\w+>"
 
 syn keyword gdNull      null
-syn keyword gdClass     int float bool
+syn keyword gdClass     int float bool void
 syn match   gdClass     "\v<\u\w+>"
 syn match   gdConstant  "\v<[A-Z_]+[A-Z0-9_]*>"
 syn keyword gdClass     AABB IP JSON OS RID
