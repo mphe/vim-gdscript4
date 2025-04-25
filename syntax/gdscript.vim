@@ -14,12 +14,10 @@ syn keyword gdRepeat      for while
 syn keyword gdOperator    and or not is in as
 syn match   gdOperator    "\V&&\|||\|!\|&\|^\||\|~\|*\|/\|%\|+\|-\|=\|<\|>\|:\|$"
 syn match   gdDelimiter   "\V(\|)\|[\|]\|{\|}\|@"
-syn keyword gdStatement   break continue pass return yield breakpoint
+syn keyword gdStatement   break continue pass return yield breakpoint func class
 syn keyword gdKeyword     extends signal self class_name const enum super
-                        \ var setget assert rpc sync set get await
+                        \ var setget assert rpc sync set get await static
                         \ remote master puppet remotesync mastersync puppetsync
-syn match   gdKeyword     "\v^\s*((static\s*)=func\s+|class\s+)"
-                        \ nextgroup=gdFunction skipwhite
 syn keyword gdBoolean     true false
 
 syn match   gdMember   "\v<(\.)@<=[a-z_]+\w*>"
